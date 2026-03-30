@@ -21,12 +21,12 @@ const gameSchema = new Schema({
 })
 
 // получение всех игр
-gameSchema.static.getAll = function() {
+gameSchema.statics.getAll = function() {
     return this.find()
 }
 
 // получение игры по рейтинги
-gameSchema.static.getByRaiting = function(raiting) {
+gameSchema.statics.getByRaiting = function(raiting) {
     return this.find({
         raiting: {
             $gte: raiting
@@ -35,14 +35,14 @@ gameSchema.static.getByRaiting = function(raiting) {
 }
 
 // получение игр по жанру
-gameSchema.static.getByRank = function(rank) {
+gameSchema.statics.getByRank = function(rank) {
     return this.find({
         rank: rank
     })
 }
 
 // создание новой игры
-gamesSchema.static.createNewGame = function(gameObject) {
+gameSchema.statics.createNewGame = function(gameObject) {
     const newGame = new this(gameObject)
     return newGame.save()
 }
