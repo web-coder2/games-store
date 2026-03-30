@@ -8,6 +8,8 @@ const dayjs = require('dayjs')
 const dotenv = require('dotenv')
 const mongoose = require('mongoose');
 
+const gamesRoute = require('./routes/game.js')
+
 
 const PORT = 8000
 const app = express()
@@ -31,6 +33,8 @@ app.use(express.static(path.join(__dirname, '../frontend/dist')));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/dist/index.html'))
 })
+
+app.use(gamesRoute)
 
 async function startConnectToDB() {
     try {
