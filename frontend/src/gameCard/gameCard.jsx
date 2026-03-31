@@ -1,7 +1,7 @@
 import { useState } from "react";
+import './GameCard.css'
 
-
-const cardGame = function(gameObject) {
+const cardGame = function({ gameObject }) {
 
     return (
 
@@ -13,7 +13,8 @@ const cardGame = function(gameObject) {
                 <p>{ gameObject.description }</p>
             </div>
             <div className="card-footer">
-                <span>{ gameObject.dateCreated }</span>
+                <span className="card-date">{ gameObject.dateCreated }</span>
+                <strong className="card-price">Цена: { gameObject.price }</strong>
             </div>
         </div>
 

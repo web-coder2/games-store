@@ -8,6 +8,7 @@ import dayjs from 'dayjs'
 import Navbar from './Navbar/Navbar'
 import IndexPage from './IndexPage/IndexPage'
 import CreateGame from './CreateGame/CreateGame'
+import GamesList from './GamesList/GamesList';
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
           <Routes>
             <Route path="/" element={ <IndexPage /> } />
             <Route path="/create" element={ <CreateGame /> } />
+            <Route path="/games" element={ <GamesList /> } />
           </Routes>
         </div>
     </Router>
