@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { NavLink } from 'react-router-dom'
 import './Navbar.css'
 
 function Navbar() {
@@ -9,6 +10,9 @@ function Navbar() {
         role: "user"
     })
 
+    // TODO: потом userObject передавать через пропс а в родителськом компоненте поулчать через redux а тамчерез
+    // TODO в redux получать userObject через locallStorage
+
     return (
         <div className='navbar'>
             <div className='navbar-title'>
@@ -16,10 +20,11 @@ function Navbar() {
             </div>
             <div className='navbar-main'>
                 <div className='navbar-list'>
-                    <p className='navbat-list-item'>Просмотр игр</p>
-                    <p className='navbat-list-item'>Описание маркета</p>
-                    <p className='navbat-list-item'>Покупка игры</p>
-                    <p className='navbat-list-item'>Корзина</p>
+                    <NavLink to="/games" className='navbat-list-item'>Просмотр игр</NavLink>
+                    <NavLink to="/about" className='navbat-list-item'>Описание маркета</NavLink>
+                    <NavLink to="/buy" className='navbat-list-item'>Покупка игры</NavLink>
+                    <NavLink tp="/cart" className='navbat-list-item'>Корзина</NavLink>
+                    <NavLink to="/create" className='navbat-list-item'>Добавить новую игру</NavLink>
                 </div>
             </div>
             <div className='navbar-user'>

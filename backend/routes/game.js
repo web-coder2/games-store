@@ -28,7 +28,7 @@ router.post('/api/games/create', async (req, res) => {
     try {
         const { gameObject } = req.body
 
-        const result = await gamesSchema.createNewGame(gameObject)
+        const result = await gameSchema.createNewGame(gameObject)
 
         res.status(200).json({
             result: result
@@ -50,7 +50,7 @@ router.get('/api/games/getByRaiting', async (req, res) => {
         
         const { raiting } = req.query
 
-        const gamesByRating = await gamesSchema.getByRating(raiting)
+        const gamesByRating = await gameSchema.getByRating(raiting)
 
         res.status(200).json({
             games: gamesByRating
