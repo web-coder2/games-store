@@ -32,7 +32,6 @@ function Navbar() {
                         </a>
                         <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <NavLink to="/cart" className="dropdown-item">Корзина</NavLink>
-                            <NavLink to="/buy" className="dropdown-item">Покупка игры</NavLink>
                             <NavLink to="/create" className="dropdown-item">Добавить новую игру</NavLink>
                         </div>
                     </li>
