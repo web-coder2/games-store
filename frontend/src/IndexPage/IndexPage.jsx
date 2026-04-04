@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import './IndexPage.css'
 
 import dayjs from 'dayjs'
 import axios from 'axios'
@@ -10,9 +9,13 @@ function IndexPage() {
 
     return (
 
-        <div className='title-container'>
-            <h3 className='title-name'>Welcome to { title }</h3>
-            <p className='title-content'>Это приложение интернет маркет дял просмотра покупки оценки игр разных компаний рейтингов и жанров</p>
+        <div className="container my-4">
+            <div className="p-4 shadow-sm">
+                <h3 className="mb-3 text-center">Welcome to {title}</h3>
+                <p className="text-center">
+                    Это приложение интернет маркет для просмотра, покупки, оценки игр разных компаний, рейтингов и жанров.
+                </p>
+            </div>
         </div>
     
     )

@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import './CreateGame.css'
 
 import dayjs from 'dayjs'
 import axios from 'axios'
@@ -52,17 +51,31 @@ function CreateGame() {
     }
 
     return (
-        <form className="create-game-form" onSubmit={ createNewGame }>
+        <form className="needs-validation" noValidate onSubmit={createNewGame}>
+  
+            <h3 className="mb-4">Добавить новую игру</h3>
 
-            <h3>Добавить новую игру</h3>
+            <div className="form-group">
+                <input className="form-control" type="text" placeholder="Название игры" name="title" value={newGame.title} onChange={handleChange} required />
+            </div>
 
-            <input className="form-input" type="text" placeholder="Название игры" name="title" value={newGame.title} onChange={handleChange} required />
-            <textarea className="form-textarea" placeholder="Описание" name="description" value={newGame.description} onChange={handleChange} required />
-            <input className="form-input" type="number" placeholder="Цена" name="price" value={newGame.price} onChange={handleChange} required />
-            <input className="form-input" type="text" placeholder="Компания" name="company" value={newGame.company} onChange={handleChange} required />
-            <input className="form-input" type="text" placeholder="Жанр" name="rank" value={newGame.rank} onChange={handleChange} />
+            <div className="form-group">
+                <textarea className="form-control" placeholder="Описание" name="description" value={newGame.description} onChange={handleChange} required />
+            </div>
 
-            <button className="submit-btn" type="submit">Добавить в маркет</button>
+            <div className="form-group">
+                <input className="form-control" type="number" placeholder="Цена" name="price" value={newGame.price} onChange={handleChange} required />
+            </div>
+
+            <div className="form-group">
+                <input className="form-control" type="text" placeholder="Компания" name="company" value={newGame.company} onChange={handleChange} required />
+            </div>
+
+            <div className="form-group">
+                <input className="form-control" type="text" placeholder="Жанр" name="rank" value={newGame.rank} onChange={handleChange} />
+            </div>
+
+            <button className="btn btn-danger w-100" type="submit">Добавить в маркет</button>
         </form>
     )
 

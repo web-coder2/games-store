@@ -4,7 +4,6 @@ import axios from 'axios'
 import dayjs from 'dayjs'
 
 import GameCard from '../GameCard/GameCard.jsx'
-import './GamesList.css'
 
 function GamesList() {
 
@@ -32,21 +31,18 @@ function GamesList() {
 
     return (
 
-        <div className='games-container'>
-            <h3 className='games-title'>Все игры на Games-market</h3>
+        <div className="container my-4">
+            <h3 className="mb-4 text-center mb-5">Все игры на Games-market</h3>
 
-            <div className='games-cards'>
+            <div className="row row-cols-1 row-cols-md-3 g-4 mb-3">
                 {
-                    allGames.map((game, index) => {
-                        return (
-                            <div className='games-card'>
-                                <GameCard key={ index } gameObject={ game } />
-                            </div>
-                        )
-                    })
+                    allGames.map((game, index) => (
+                        <div className="col" key={index}>
+                            <GameCard gameObject={game} />
+                        </div>
+                    ))
                 }
             </div>
-
         </div>
 
     )
