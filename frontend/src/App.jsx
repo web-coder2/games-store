@@ -11,6 +11,7 @@ import CreateGame from './CreateGame/CreateGame'
 import GamesList from './GamesList/GamesList'
 import AboutGame from './AboutGame/AboutGame'
 import Cart from './Cart/Cart'
+import GamePage from './GamePage/GamePage'
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
             <Route path="/games" element={ <GamesList /> } />
             <Route path="/about" element={ <AboutGame /> } />
             <Route path="/cart" element={ <Cart /> } />
+            <Route path="/game/:gameId" element={ <GamePage /> } />
           </Routes>
         </div>
     </Router>

@@ -11,6 +11,21 @@ router.get('/api/games/getAll', async (req, res) => {
     try {
         let gamesList = await gameSchema.getAll()
 
+        gamesList = gamesList.map((game) => {
+
+            return {
+                title: game.title,
+                description: game.description.slice(0, 50) + '....',
+                price: game.price,
+                company: game.company,
+                rating: game.rating,
+                rank: game.rank,
+                dateCreated: game.dateCreated,
+                _id: game._id
+            }
+
+        })
+
         res.status(200).json({
             games: gamesList
         })
@@ -60,6 +75,25 @@ router.get('/api/games/getByRaiting', async (req, res) => {
         console.log(e.message)
         res.status(500).json({
             msg: e.message
+        })
+    }
+})
+
+router.get('/api/games/getById', async (req, res) => {
+    try {
+
+        const { gameId } = req.query
+
+        const gameObject = await gameSchema.findByGameId(gameId)
+
+        res.status(200).json({
+            game: gameObject
+        })
+
+    } catch (e) {
+        console.log(e.message)
+        res.status(500).json({
+            err: e.message
         })
     }
 })

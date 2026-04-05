@@ -47,4 +47,12 @@ gameSchema.statics.createNewGame = function(gameObject) {
     return newGame.save()
 }
 
+// получить игру по ее айди
+gameSchema.statics.findByGameId = function(gameId) {
+    const gameObject = this.findOne({
+        _id: gameId
+    })
+    return gameObject
+}
+
 module.exports = model('Game', gameSchema)
