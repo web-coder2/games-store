@@ -109,6 +109,10 @@ router.post('/api/games/setGameRaiting', async (req, res) => {
             msg: responseBySet
         })
 
+        // TODO: сделать новую модель история рейтинга user, game, countStars
+        // TODO: потом создать комопнетн с просомтром этих истоий в вид таблицы
+        // TODO: но только после того как сделаю модуль с юзерами
+
     } catch (e) {
         console.log(e.message)
         res.status(500).json({
