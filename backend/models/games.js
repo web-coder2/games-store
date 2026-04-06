@@ -16,8 +16,15 @@ const gameSchema = new Schema({
     company: String,
     rating: Number,
     rank: String, // жанр игры
-    dateCreated: String // дата выхода игры
-
+    dateCreated: String, // дата выхода игры
+    countRating: {  // кол-во оценивших игру юзеров
+        type: Number,
+        default: 1
+    },
+    totalCountStars: { // кол-во всего звезд
+        type: Number,
+        default: 5
+    }
 })
 
 // получение всех игр
@@ -53,6 +60,29 @@ gameSchema.statics.findByGameId = function(gameId) {
         _id: gameId
     })
     return gameObject
+}
+
+gameSchema.statics.setNewRating = async function(countStars, gameId) {
+    const game = await this.findOne({ _id: gameId })
+    
+    if (!game) {
+        throw new Error('Game not found')
+    }
+
+    const newCountRating = game.countRating + 1
+    const newTotalCountStars = game.totalCountStars + countStars
+    const newRating = newTotalCountStars / newCountRating
+
+    await this.findOneAndUpdate(
+        { _id: gameId },
+        {
+            $set: {
+                countRating: newCountRating,
+                totalCountStars: newTotalCountStars,
+                rating: newRating
+            }
+        }
+    )
 }
 
 module.exports = model('Game', gameSchema)

@@ -98,4 +98,23 @@ router.get('/api/games/getById', async (req, res) => {
     }
 })
 
+router.post('/api/games/setGameRaiting', async (req, res) => {
+    try {
+
+        const { gameId, countStars } = req.body
+
+        const responseBySet = await gameSchema.setNewRating(countStars, gameId)
+
+        res.status(200).json({
+            msg: responseBySet
+        })
+
+    } catch (e) {
+        console.log(e.message)
+        res.status(500).json({
+            err: e.message
+        })
+    }
+})
+
 module.exports = router
