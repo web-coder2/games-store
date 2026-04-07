@@ -26,13 +26,31 @@ router.post('/api/users/create', async (req, res) => {
     }
 })
 
+router.post('/api/users/addNewGame', async (req, res) => {
+    try {
+        
+        const { userObject, newGameId } = req.body
+        const result = await usersSchema.addNewGame(userObject, newGameId)
+
+        res.status(200).json({
+            msg: 'игра доабвлена в корзину успешно'
+        })
+
+    } catch (e) {
+        console.log(e.message)
+        res.status(500).json({
+            msg: e.message
+        })
+    }
+})
+
 router.post('/api/users/auth', async (req, res) => {
 
     try {
 
         const { login, password } = req.body
 
-        const isUser = await usersSchema.find({
+        const isUser = await usersSchema.findOne({
             login: login,
             password: password
         })

@@ -12,6 +12,7 @@ import GamesList from './GamesList/GamesList'
 import AboutGame from './AboutGame/AboutGame'
 import Cart from './Cart/Cart'
 import GamePage from './GamePage/GamePage'
+import LoginForm from './LoginForm/LoginForm'
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
             <Route path="/about" element={ <AboutGame /> } />
             <Route path="/cart" element={ <Cart /> } />
             <Route path="/game/:gameId" element={ <GamePage /> } />
+            <Route path="/login" element={ <LoginForm /> } />
           </Routes>
         </div>
     </Router>
