@@ -8,7 +8,8 @@ const dayjs = require('dayjs')
 const dotenv = require('dotenv')
 const mongoose = require('mongoose');
 
-const gamesRoute = require('./routes/game.js')
+const gamesRoute = require('./routes/games.js')
+const usersRoute = require('./routes/users.js')
 
 
 const PORT = 8000
@@ -35,6 +36,7 @@ app.get('/', (req, res) => {
 })
 
 app.use(gamesRoute)
+app.use(usersRoute)
 
 async function startConnectToDB() {
     try {
