@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { getDataList } from '../reduxSetup.js'
 
 import axios from 'axios'
 import dayjs from 'dayjs'
@@ -12,14 +13,11 @@ function GamesList() {
     let apiRoute = 'http://localhost:8000/api/'
 
     async function getGamesList() {
-        console.log('Вызов getGamesList');
         try {
-            const response = await axios.get(`${apiRoute}games/getAll`)
-            const gamesArray = response.data.games
+            const response = await getDataList('games/getAll', {})
+            const gamesArray = response.games
 
             setAllGames([...gamesArray])
-
-            console.log(allGames)
         } catch (e) {
             console.log(e.message)
         }
