@@ -15,7 +15,7 @@ function GamesList() {
     async function getGamesList() {
         try {
             const response = await getDataList('games/getAll', {})
-            const gamesArray = response.games
+            const gamesArray = response.data.games
 
             setAllGames([...gamesArray])
         } catch (e) {

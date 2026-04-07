@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { setDataList, setUser } from '../reduxSetup.js'
 
 import axios from 'axios'
 import dayjs from 'dayjs'
@@ -6,7 +8,7 @@ import dayjs from 'dayjs'
 function LoginForm() {
 
     let apiRoute = 'http://localhost:8000/api/'
-
+    let dispatch = useDispatch()
 
     const [createFormData, setCreateFormData] = useState({
         login: '',
@@ -31,15 +33,18 @@ function LoginForm() {
 
 
     async function requestAuth() {
-        const response = await axios.post(`${apiRoute}users/auth`, {
+        const response = await setDataList('users/auth', {
             login: loginFormData.login,
             password: loginFormData.password
         })
-        console.log(response)
+        let userObject = response.data.user
+        console.log(userObject)
+
+        // dispatch(setUser(userObject))
     }
 
     async function requestCreate() {
-        const response = await axios.post(`${apiRoute}users/create`, {
+        const response = await setDataList('users/create', {
             userObject: createFormData
         })
         console.log(response)

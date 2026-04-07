@@ -29,7 +29,7 @@ const store = createStore(reducer)
 export const getDataList = async (route, params) => {
     try {
         const response = await axios.get(`${initialState.baseURL}${route}`, { params })
-        return response.data
+        return response
     } catch (error) {
         console.error(error.message)
     }
@@ -39,7 +39,7 @@ export const getDataList = async (route, params) => {
 export const setDataList = async (route, params) => {
     try {
         const response = await axios.post(`${initialState.baseURL}${route}`, params)
-        return response.data
+        return response
     } catch (error) {
         console.error(error.message)
     }

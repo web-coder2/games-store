@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Provider, useSelector } from 'react-redux'
+import store from './reduxSetup.js'
 import './App.css'
 
 import axios from 'axios'
@@ -18,6 +20,10 @@ function App() {
 
   let apiRoute = 'http://localhost:8000/api/'
 
+  const userObject = useSelector((state) => state.user)
+
+  console.log(userObject)
+
   return (
   
     <>
@@ -34,7 +40,7 @@ function App() {
             <Route path="/login" element={ <LoginForm /> } />
           </Routes>
         </div>
-    </Router>
+      </Router>
   </>
 
   )
