@@ -3,7 +3,7 @@ import axios from 'axios'
 
 // 1. Начальное состояние state
 const initialState = {
-  user: null,
+  user: JSON.parse(localStorage.getItem('user')) || null,
   baseURL: 'http://localhost:8000/api/',
 }
 
@@ -15,7 +15,11 @@ const SET_USER = 'SET_USER'
 function reducer(state = initialState, action) {
   switch (action.type) {
     case SET_USER:
-      // Обновляем user в state
+      if (action.payload) {
+        localStorage.setItem('user', JSON.stringify(action.payload));
+      } else {
+        localStorage.removeItem('user');
+      }
       return { ...state, user: action.payload }
     default:
       return state

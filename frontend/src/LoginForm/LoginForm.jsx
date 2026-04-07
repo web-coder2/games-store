@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { setDataList, setUser } from '../reduxSetup.js'
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import axios from 'axios'
 import dayjs from 'dayjs'
@@ -8,7 +9,9 @@ import dayjs from 'dayjs'
 function LoginForm() {
 
     let apiRoute = 'http://localhost:8000/api/'
-    let dispatch = useDispatch()
+
+    const dispatch = useDispatch()
+    const navigate = useNavigate() 
 
     const [createFormData, setCreateFormData] = useState({
         login: '',
@@ -21,6 +24,8 @@ function LoginForm() {
         password: ''
     })
 
+    const [redirect, setRedirect] = useState(false)
+
     const handleCreateChange = (e) => {
         const { name, value } = e.target
         setCreateFormData({ ...createFormData, [name]: value })
@@ -31,16 +36,29 @@ function LoginForm() {
         setLoginFormData({ ...loginFormData, [name]: value })
     }
 
+    // функция для обнукления юзерских данных каждый раз когда попадает на странцие логина
+    function resetUserObject() {
+        dispatch(setUser(null))
+    }
 
     async function requestAuth() {
         const response = await setDataList('users/auth', {
             login: loginFormData.login,
             password: loginFormData.password
         })
-        let userObject = response.data.user
-        console.log(userObject)
 
-        // dispatch(setUser(userObject))
+        let userObject
+
+        if (response.status === 201) {
+            userObject = response.data.user
+            dispatch(setUser(userObject))
+    
+            setRedirect(true)
+
+        } else if (response.status === 301) {
+            userObject = null
+        }
+
     }
 
     async function requestCreate() {
@@ -64,8 +82,18 @@ function LoginForm() {
         requestAuth()
     }
 
+    useEffect(() => {
+        resetUserObject()
+    }, [])
+
+    useEffect(() => {
+        if (redirect) {
+        navigate('/', { replace: true })
+        }
+    }, [redirect, navigate]) // срабоатет этот юзЭфект если изменится переменые редирект и навигат
 
     return (
+
         <div className="container bg-dark text-white p-4">
             <ul className="nav nav-tabs" id="authTab" role="tablist">
                 <li className="nav-item">

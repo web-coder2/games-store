@@ -1,13 +1,20 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
+import { Provider, useSelector } from 'react-redux'
 
 function Navbar() {
 
     const [userObject, setUserObject] = useState({
         login: "test@test.com",
-        name: "testUser",
-        role: "user"
+        password: "testUser",
+        userNick: "user"
     })
+
+    const user = useSelector((state) => state.user)
+
+    useEffect(() => {
+        setUserObject(user)
+    }, [user])
 
     // TODO: потом userObject передавать через пропс а в родителськом компоненте поулчать через redux а тамчерез
     // TODO в redux получать userObject через locallStorage
@@ -37,14 +44,14 @@ function Navbar() {
                         </div>
                     </li>
                 </ul>
-                <div className="d-flex align-items-center">
-                    <img
-                        src="https://avatars.mds.yandex.net/i?id=c0f3acc0d405aa513700fbaffa9aa0d9db6c56a8-4314086-images-thumbs&n=13"
-                        alt="User Avatar"
-                        className="rounded-circle"
-                        style={{ width: '40px', height: '40px', marginRight: '10px' }}
-                    />
-                    <span className="navbar-text">{userObject.name}</span>
+                <div className="dropdown d-flex align-items-center">
+                    <a className="d-flex align-items-center dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="https://avatars.mds.yandex.net/i?id=c0f3acc0d405aa513700fbaffa9aa0d9db6c56a8-4314086-images-thumbs&n=13"alt="User Avatar" className="rounded-circle" style={{ width: '40px', height: '40px', marginRight: '10px' }} />
+                        <span className="navbar-text">{userObject.userNick}</span>
+                    </a>
+                    <div className="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                        <a className="dropdown-item" href="/login">Выйти</a>
+                    </div>
                 </div>
             </div>
         </nav>

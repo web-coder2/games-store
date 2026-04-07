@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { Provider, useSelector } from 'react-redux'
 import store from './reduxSetup.js'
 import './App.css'
@@ -16,27 +16,37 @@ import Cart from './Cart/Cart'
 import GamePage from './GamePage/GamePage'
 import LoginForm from './LoginForm/LoginForm'
 
+function PrivateRoute({ children }) {
+  const user = useSelector((state) => state.user)
+  const location = useLocation()
+
+  console.log(user, 'is Auth', user !== null)
+
+  if (!user) {
+    return <Navigate to="/login" state={{ from: location }} replace />
+  }
+
+  return children
+}
+
 function App() {
 
-  let apiRoute = 'http://localhost:8000/api/'
+  const user = useSelector((state) => state.user)
 
-  const userObject = useSelector((state) => state.user)
-
-  console.log(userObject)
 
   return (
   
     <>
       <Router>
-        <Navbar />
+        {  user !== null ? <Navbar /> : '' }
         <div className='main-container'>
           <Routes>
-            <Route path="/" element={ <IndexPage /> } />
-            <Route path="/create" element={ <CreateGame /> } />
-            <Route path="/games" element={ <GamesList /> } />
-            <Route path="/about" element={ <AboutGame /> } />
-            <Route path="/cart" element={ <Cart /> } />
-            <Route path="/game/:gameId" element={ <GamePage /> } />
+            <Route path="/" element={ <PrivateRoute>  <IndexPage />  </PrivateRoute> } />
+            <Route path="/create" element={ <PrivateRoute>  <CreateGame />  </PrivateRoute> } />
+            <Route path="/games" element={ <PrivateRoute>  <GamesList />  </PrivateRoute> } />
+            <Route path="/about" element={ <PrivateRoute>  <AboutGame />  </PrivateRoute> } />
+            <Route path="/cart" element={ <PrivateRoute>  <Cart />  </PrivateRoute>  } />
+            <Route path="/game/:gameId" element={ <PrivateRoute>  <GamePage />  </PrivateRoute> } />
             <Route path="/login" element={ <LoginForm /> } />
           </Routes>
         </div>
