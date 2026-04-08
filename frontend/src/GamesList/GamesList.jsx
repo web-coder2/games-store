@@ -10,8 +10,6 @@ function GamesList() {
 
     const [allGames, setAllGames] = useState([])
 
-    let apiRoute = 'http://localhost:8000/api/'
-
     async function getGamesList() {
         try {
             const response = await getDataList('games/getAll', {})

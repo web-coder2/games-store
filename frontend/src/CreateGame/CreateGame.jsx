@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { setDataList, getDataList } from '../reduxSetup.js'
 
 import dayjs from 'dayjs'
 import axios from 'axios'
@@ -7,8 +8,6 @@ let apiRoute = 'http://localhost:8000/api/'
 
 
 function CreateGame() {
-
-    let apiRoute = 'http://localhost:8000/api/'
 
     const [newGame, setNewGame] = useState({
         title: "",
@@ -30,7 +29,7 @@ function CreateGame() {
 
         try {
 
-            const response = await axios.post(`${apiRoute}games/create`, {
+            const response = await setDataList('games/create', {
                 gameObject: newGame
             })
 

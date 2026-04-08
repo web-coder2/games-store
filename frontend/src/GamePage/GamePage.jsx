@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import { setDataList, getDataList } from '../reduxSetup.js'
 
 import axios from 'axios'
 import dayjs from 'dayjs'
+import { use } from 'react'
 
 function GamePage() {
 
@@ -11,15 +13,12 @@ function GamePage() {
     const [gameObject, setGameObject] = useState({})
     const countStars = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-    let apiRoute = 'http://localhost:8000/api/'
-
     async function getGameById() {
         try {
-            const response = await axios.get(`${apiRoute}games/getById`, {
-                params: {
-                    gameId: gameId
-                }
+            const response = await getDataList('games/getById', {
+                gameId: gameId
             })
+
             const gameObject = response.data.game
 
             setGameObject({...gameObject})
@@ -34,7 +33,7 @@ function GamePage() {
         // TODO: и крч патом создать функцию с апи запрососм на бьэк по этой хуйне
         
         try {
-            const response = await axios.post(`${apiRoute}games/setGameRaiting`, {
+            const response = await setDataList('games/setGameRaiting', {
                 gameId: gameId,
                 countStars: countStar     
             })
