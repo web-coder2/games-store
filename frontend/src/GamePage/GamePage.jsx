@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { setDataList, getDataList } from '../reduxSetup.js'
-
-import axios from 'axios'
-import dayjs from 'dayjs'
-import { use } from 'react'
+import { Provider, useSelector } from 'react-redux'
 
 function GamePage() {
 
     const { gameId } = useParams()
 
+    const user = useSelector((state) => state.user)
+
+
     const [gameObject, setGameObject] = useState({})
+    const [userObject, setUserObject] = useState({})
+
     const countStars = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
     async function getGameById() {
@@ -22,6 +24,21 @@ function GamePage() {
             const gameObject = response.data.game
 
             setGameObject({...gameObject})
+        } catch (e) {
+            console.log(e.message)
+        }
+    }
+
+    async  function addGameToBuy() {
+        try {
+
+            const response = await setDataList('users/addNewGame', {
+                newGameObject: gameObject,
+                userObject: userObject
+            })
+
+            console.log(response)
+
         } catch (e) {
             console.log(e.message)
         }
@@ -46,7 +63,18 @@ function GamePage() {
 
     useEffect(() => {
         getGameById()
+        setUserObject(user)
     }, [])
+
+    let isCanAdd = true
+
+    if (userObject.gamesList && Array.isArray(userObject.gamesList)) {
+        if (userObject.gamesList.some(game => game.gameTitle === gameObject.title)) {
+            isCanAdd = false;
+        } else {
+            isCanAdd = true;
+        }
+    }
 
     return (
 
@@ -72,7 +100,7 @@ function GamePage() {
                 </div>
                 <div className='mt-5'>
                     <h3>Добавить игру в корзину</h3>
-                    <button className='btn btn-outline-warning'>Добавить</button>
+                    <button disabled={ !isCanAdd } onClick={() => { addGameToBuy() }} className='btn btn-outline-warning'>Добавить</button>
                     {/* TOOD: потом добавить роут с получением и доабвлением в маисв юзера его игр */}
                 </div>
                 <div className='mt-5'>

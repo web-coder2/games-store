@@ -22,10 +22,9 @@ const userSchema = new Schema({
   gamesList: { // корзина игр для юзера
     type: [
       {
-        gameId: {
-          type: Types.ObjectId,
-          ref: 'Game'
-        }
+        gameTitle: String,
+        gamePrice: Number,
+        gameRank: String
       }
     ],
     default: []
@@ -37,7 +36,7 @@ userSchema.statics.createNewUser = function(userObject) {
   return newUser.save()
 }
 
-userSchema.statics.addNewGame = async function(userObject, newGameId) {
+userSchema.statics.addNewGame = async function(userObject, newGameObject) {
   const userInfo = await this.findOne({
     login: userObject.login,
     password: userObject.password
@@ -47,12 +46,19 @@ userSchema.statics.addNewGame = async function(userObject, newGameId) {
 
     let listGames = [...userInfo.gamesList]
 
-    listGames.push(ObjectId(newGameId))
+    console.log(newGameObject)
+
+    listGames.push({
+      gameTitle: newGameObject.title,
+      gamePrice: newGameObject.price,
+      gameRank: newGameObject.rank
+    })
 
     await this.findOneAndUpdate(
       { login: userObject.login, password: userObject.password },
       { $set: { gamesList: listGames } }
     )
+
   }
 }
 

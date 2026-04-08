@@ -29,8 +29,8 @@ router.post('/api/users/create', async (req, res) => {
 router.post('/api/users/addNewGame', async (req, res) => {
     try {
         
-        const { userObject, newGameId } = req.body
-        const result = await usersSchema.addNewGame(userObject, newGameId)
+        const { userObject, newGameObject } = req.body
+        const result = await usersSchema.addNewGame(userObject, newGameObject)
 
         res.status(200).json({
             msg: 'игра доабвлена в корзину успешно'
