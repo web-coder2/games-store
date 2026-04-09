@@ -1,17 +1,19 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { setDataList, getDataList } from '../reduxSetup.js'
-import { Provider, useSelector } from 'react-redux'
+import { setDataList, getDataList, setUser } from '../reduxSetup.js'
+import { Provider, useSelector, useDispatch } from 'react-redux'
 
 function GamePage() {
 
     const { gameId } = useParams()
 
     const user = useSelector((state) => state.user)
+    const dispatch = useDispatch()
 
 
     const [gameObject, setGameObject] = useState({})
     const [userObject, setUserObject] = useState({})
+    const [isCanAdd, setIsCanAdd] = useState(true)
 
     const countStars = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
@@ -39,6 +41,19 @@ function GamePage() {
 
             console.log(response)
 
+            userObject.gamesList.push({
+                gamePrice: gameObject.price,
+                gameTitle: gameObject.title,
+                gameRank: gameObject.rank
+            })
+
+            let newUserObject = userObject
+
+            setUserObject(newUserObject)
+            dispatch(setUser(newUserObject))
+
+            setIsCanAdd(false)
+
         } catch (e) {
             console.log(e.message)
         }
@@ -64,15 +79,16 @@ function GamePage() {
     useEffect(() => {
         getGameById()
         setUserObject(user)
+        initIsCanAdd()
     }, [])
 
-    let isCanAdd = true
-
-    if (userObject.gamesList && Array.isArray(userObject.gamesList)) {
-        if (userObject.gamesList.some(game => game.gameTitle === gameObject.title)) {
-            isCanAdd = false;
-        } else {
-            isCanAdd = true;
+    function initIsCanAdd() {
+        if (userObject.gamesList && Array.isArray(userObject.gamesList)) {
+            if (userObject.gamesList.some(game => game.gameTitle === gameObject.title)) {
+                setIsCanAdd(false)
+            } else {
+                setIsCanAdd(true)
+            }
         }
     }
 
