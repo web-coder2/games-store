@@ -44,6 +44,24 @@ router.post('/api/users/addNewGame', async (req, res) => {
     }
 })
 
+router.post('/api/users/removeGame', async (req, res) => {
+    try {
+        
+        const { userObject, gameObject } = req.body
+        const result = await usersSchema.removeGame(userObject, gameObject)
+
+        res.status(200).json({
+            msg: 'игра удалилась из корзины'
+        })
+
+    } catch (e) {
+        console.log(e.message)
+        res.status(500).json({
+            msg: e.message
+        })
+    }
+})
+
 router.post('/api/users/auth', async (req, res) => {
 
     try {

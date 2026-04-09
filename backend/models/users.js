@@ -62,4 +62,33 @@ userSchema.statics.addNewGame = async function(userObject, newGameObject) {
   }
 }
 
+
+userSchema.statics.removeGame = async function(userObject, newGameObject) {
+  const userInfo = await this.findOne({
+    login: userObject.login,
+    password: userObject.password
+  })
+
+  if (userInfo) {
+
+    let listGames = [...userInfo.gamesList]
+
+    // могут убраться несоклько игр одинаковых из корзины но так и нужно 
+    // помоу что их и не должно быть несоклько это баг на коинге был пока не доделал
+    let filteredByRemove = listGames.filter((game) => {
+      return !(
+        game.gameTitle === newGameObject.gameTitle &&
+        game.gamePrice === newGameObject.gamePrice &&
+        game.gameRank === newGameObject.gameRank
+      )
+    })
+
+    await this.findOneAndUpdate(
+      { login: userObject.login, password: userObject.password },
+      { $set: { gamesList: filteredByRemove } }
+    )
+
+  }
+}
+
 module.exports = model('User', userSchema);

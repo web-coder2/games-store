@@ -39,6 +39,26 @@ export const getDataList = async (route, params) => {
     }
 }
 
+export const updateUserObjectAfterAction = async (userObject) => {
+
+  try {
+
+    const userResponse = await axios.post(`${initialState.baseURL}users/auth`, {
+      login: userObject.login,
+      password: userObject.password,
+    })
+
+    let newUserData = userResponse.data.user
+
+    localStorage.setItem('user', JSON.stringify(newUserData))
+    store.dispatch(setUser(newUserData))
+
+  } catch (e) {
+    console.log(e.message)
+  }
+
+}
+
 // функции для post запросов
 export const setDataList = async (route, params) => {
     try {

@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
-import { Provider, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
+import { setDataList, getDataList, setUser, updateUserObjectAfterAction } from '../reduxSetup.js'
+import { Provider, useSelector, useDispatch } from 'react-redux'
 
 
 function BuyGames() {
@@ -9,15 +11,34 @@ function BuyGames() {
     const [userObject, setUserObject] = useState({})
     const [gamesList, setGamesList] = useState([])
 
+    
+    async function removeGameFromUser(game) {
+        try {
+
+            const response = await setDataList('users/removeGame', {
+                userObject: userObject,
+                gameObject: game
+            })
+
+            await updateUserObjectAfterAction(userObject)
+
+            // КОНЧЕНАЯ БЛЯДСКАЯ РЕАКТИВНОСТЬ В РЕАКТЕ НАЗУЯ ТАКОЕ ЗУЙНЮ СДЕЛАЛИ КОГДА ЕТСЬ VUE.JS
+            let updatedUserData = JSON.parse(localStorage.getItem('user'))
+
+            setUserObject(updatedUserData)
+            setGamesList([...updatedUserData.gamesList])
+
+
+        } catch (e) {
+            console.log(e.message)
+        }
+    }
 
 
     useEffect(() => {
         setUserObject(user)
-
         let allGames = [...user.gamesList]
-
         setGamesList(allGames)
-
     }, [])
 
     let gamesShow
@@ -25,9 +46,9 @@ function BuyGames() {
     if (gamesList.length === 0) {
         gamesShow = <h3>Игр пока нет</h3>
     } else {
-        gamesShow = gamesList.map((game) => {
+        gamesShow = gamesList.map((game, index) => {
             return (
-                <div className='card bg-dark text-light mb-3 ml-3 col-sm-3'>
+                <div key={ game._id || index } className='card bg-dark text-light mb-3 ml-3 col-sm-3'>
                     <div className='card-header'>
                         <h3>{ game.gameTitle }</h3>
                     </div>
@@ -36,7 +57,7 @@ function BuyGames() {
                         <p>Цена игры: { game.gamePrice } $</p>
                     </div>
                     <div className='card-footer'>
-                        <button className='btn btn-danger'>Убрать игру</button>
+                        <button onClick={() => { removeGameFromUser(game) }} className='btn btn-danger'>Убрать игру</button>
                     </div>
                 </div>
             )

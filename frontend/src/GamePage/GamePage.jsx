@@ -79,18 +79,15 @@ function GamePage() {
     useEffect(() => {
         getGameById()
         setUserObject(user)
-        initIsCanAdd()
     }, [])
 
-    function initIsCanAdd() {
+    // нужно отлдельным юзэфектом вынести помоу что этот код должен рсботать тогда когда изменится юзеробджект из дефолтного {}
+    useEffect(() => {
         if (userObject.gamesList && Array.isArray(userObject.gamesList)) {
-            if (userObject.gamesList.some(game => game.gameTitle === gameObject.title)) {
-                setIsCanAdd(false)
-            } else {
-                setIsCanAdd(true)
-            }
+            const gameExists = userObject.gamesList.some(game => game.gameTitle === gameObject.title)
+            setIsCanAdd(!gameExists)
         }
-    }
+    }, [userObject, gameObject])
 
     return (
 
