@@ -15,7 +15,7 @@ const cardGame = function({ gameObject }) {
         <div className="card mb-3 bg-dark text-light h-100">
             <div className="card-header text-center d-flex align-items-center">
                 <h3 className="card-title mb-0">{gameObject.title}</h3>
-                <i className="fas fa-star text-warning ml-auto">{ gameObject.rating }</i>
+                <i className="fas fa-star text-warning ml-auto">{ Math.round(gameObject.rating) }</i>
             </div>
             <div className="card-body">
                 <p className="card-text">{gameObject.description}</p>

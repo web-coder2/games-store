@@ -62,8 +62,8 @@ gameSchema.statics.findByGameId = function(gameId) {
     return gameObject
 }
 
-gameSchema.statics.setNewRating = async function(countStars, gameId) {
-    const game = await this.findOne({ _id: gameId })
+gameSchema.statics.setNewRating = async function(countStars, gameObject) {
+    const game = await this.findOne({ _id: gameObject._id })
     
     if (!game) {
         throw new Error('Game not found')
@@ -74,7 +74,7 @@ gameSchema.statics.setNewRating = async function(countStars, gameId) {
     const newRating = newTotalCountStars / newCountRating
 
     await this.findOneAndUpdate(
-        { _id: gameId },
+        { _id: game._id },
         {
             $set: {
                 countRating: newCountRating,

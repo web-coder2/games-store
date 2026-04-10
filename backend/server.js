@@ -10,7 +10,7 @@ const mongoose = require('mongoose');
 
 const gamesRoute = require('./routes/games.js')
 const usersRoute = require('./routes/users.js')
-
+const historyStarRoute = require('./routes/historyStarRoute.js')
 
 const PORT = 8000
 const app = express()
@@ -37,6 +37,7 @@ app.get('/', (req, res) => {
 
 app.use(gamesRoute)
 app.use(usersRoute)
+app.use(historyStarRoute)
 
 async function startConnectToDB() {
     try {

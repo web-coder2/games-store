@@ -41,6 +41,7 @@ function Navbar() {
                         <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <NavLink to="/cart" className="dropdown-item">Корзина</NavLink>
                             <NavLink to="/create" className="dropdown-item">Добавить новую игру</NavLink>
+                            <NavLink to="/historyStars" className="dropdown-item">История критиков</NavLink>
                         </div>
                     </li>
                 </ul>

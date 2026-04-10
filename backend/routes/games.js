@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const { Router } = require('express');
 
 const gameSchema = require('../models/games.js')
+const historyStar = require('../models/historyStar.js')
 
 const router = Router()
 
@@ -101,9 +102,13 @@ router.get('/api/games/getById', async (req, res) => {
 router.post('/api/games/setGameRaiting', async (req, res) => {
     try {
 
-        const { gameId, countStars } = req.body
+        const { gameObject, countStars, userObject } = req.body
 
-        const responseBySet = await gameSchema.setNewRating(countStars, gameId)
+        const responseBySet = await gameSchema.setNewRating(countStars, gameObject)
+
+        const responseByHistory = await historyStar.create(userObject, gameObject, countStars)
+
+        const allHistoryRows = await historyStar.getAll()
 
         res.status(200).json({
             msg: responseBySet

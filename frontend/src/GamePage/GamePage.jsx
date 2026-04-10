@@ -59,15 +59,12 @@ function GamePage() {
         }
     }
 
-    async function setRaitingStar( countStar ) {
-        console.log(countStar)
-        // TODO: туду ебать патом сделать роут и метод для засета рейтинга по коунтЮзерСетСтарс и суме всех звезд
-        // TODO: и крч патом создать функцию с апи запрососм на бьэк по этой хуйне
-        
+    async function setRaitingStar( countStar ) {    
         try {
             const response = await setDataList('games/setGameRaiting', {
-                gameId: gameId,
-                countStars: countStar     
+                gameObject: gameObject,
+                countStars: countStar,
+                userObject: userObject
             })
 
             await getGameById()
@@ -104,7 +101,7 @@ function GamePage() {
                         <strong>Дата создания:</strong> {gameObject.dateCreated}
                     </div>
                     <div className="col-md-4 mb-2">
-                        <i className="fas fa-star text-warning ml-auto">{ gameObject.rating }</i>
+                        <i className="fas fa-star text-warning ml-auto">{ Math.round(gameObject.rating) }</i>
                     </div>
                 </div>
                 <div className="mt-3">
