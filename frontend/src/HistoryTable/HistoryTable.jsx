@@ -17,7 +17,7 @@ function HistoryTable() {
 
         if (stars < 5) {
             className = 'text-danger'
-        } else if (stars >= 5 && stars <= 7) {
+        } else if (stars >=  5 && stars <= 7) {
             className = 'text-warning'
         } else if (stars > 7) {
             className = 'text-success'

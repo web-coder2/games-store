@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom'
 import { setDataList, getDataList, setUser } from '../reduxSetup.js'
 import { Provider, useSelector, useDispatch } from 'react-redux'
 
+import FormComment from '../FormComment/FormComment.jsx' 
+
 function GamePage() {
 
     const { gameId } = useParams()
@@ -129,6 +131,9 @@ function GamePage() {
                     }
 
                 </div>
+            </div>
+            <div>
+                <FormComment gameTitle={gameObject.title} userObject={userObject} game={gameObject._id} />
             </div>
         </div>
     )
