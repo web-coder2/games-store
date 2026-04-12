@@ -99,6 +99,25 @@ router.get('/api/games/getById', async (req, res) => {
     }
 })
 
+router.post('/api/games/editGame', async (req, res) => {
+    try {
+
+        const { newEditGameObject } = req.body
+
+        let result = await gameSchema.editGame(newEditGameObject)
+
+        res.status(200).json({
+            msg: 'game has been successfuly edited )))'
+        })
+
+    } catch (e) {
+        console.log(e.message)
+        res.status(500).json({
+            msg: e.message
+        })
+    }
+})
+
 router.post('/api/games/setGameRaiting', async (req, res) => {
     try {
 

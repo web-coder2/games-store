@@ -54,6 +54,27 @@ gameSchema.statics.createNewGame = function(gameObject) {
     return newGame.save()
 }
 
+gameSchema.statics.editGame = function(newGameObject) {
+
+    console.log(newGameObject)
+
+    const resultByEdit = this.findOneAndUpdate(
+        { _id: newGameObject._id },
+        {
+            $set: {
+                title: newGameObject.title,
+                // description: newGameObject.description,
+                price: Number(newGameObject.price),
+                company: newGameObject.company,
+                rank: newGameObject.rank
+            }
+        },
+        { new: true }
+    )
+
+    return resultByEdit
+}
+
 // получить игру по ее айди
 gameSchema.statics.findByGameId = function(gameId) {
     const gameObject = this.findOne({
