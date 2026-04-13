@@ -33,8 +33,8 @@ function GamesList() {
             <div className="row row-cols-1 row-cols-md-3 g-4 mb-3">
                 {
                     allGames.map((game, index) => (
-                        <div className="col" key={index}>
-                            <GameCard gameObject={game} />
+                        <div className="col mt-3" key={index}>
+                            <GameCard gameObject={game} afterDeleteGame={ getGamesList } />
                         </div>
                     ))
                 }

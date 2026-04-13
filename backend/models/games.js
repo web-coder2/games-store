@@ -54,6 +54,13 @@ gameSchema.statics.createNewGame = function(gameObject) {
     return newGame.save()
 }
 
+gameSchema.statics.deleteGame = function(gameId) {
+    const result = this.findOneAndDelete({
+        _id: gameId
+    })
+    return result
+}
+
 gameSchema.statics.editGame = function(newGameObject) {
 
     console.log(newGameObject)

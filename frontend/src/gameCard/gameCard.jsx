@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useNavigate } from 'react-router-dom'
 import { getDataList, setDataList } from '../reduxSetup.js'
 
-const cardGame = function({ gameObject }) {
+const cardGame = function({ gameObject, afterDeleteGame }) {
 
     const navigate = useNavigate()
 
@@ -23,6 +23,7 @@ const cardGame = function({ gameObject }) {
             newEditGameObject: editGameObject
         })
         setShowToEdit(false)
+        await afterDeleteGame()
     }
 
     const handleChange = (field) => (e) => {
@@ -30,6 +31,22 @@ const cardGame = function({ gameObject }) {
         ...prev,
         [field]: e.target.value
         }));
+    }
+
+    async function deleteGame(gameId) {
+        try {
+
+            let respone = await setDataList('games/deleteGame', {
+                gameId: gameId
+            })
+
+            console.log(respone)
+
+            await afterDeleteGame()
+
+        } catch (e) {
+            console.log(e.message)
+        }
     }
 
     function redirectToPage(gameId) {
@@ -47,6 +64,10 @@ const cardGame = function({ gameObject }) {
                 <p className="card-text">{gameObject.description}</p>
                 <button className="btn btn-success w-100" onClick={() => redirectToPage(gameObject._id)}>read more</button>
                 <button className="btn btn-warning w-100 mt-3" onClick={() => { openShowEditModal() }}>обновить игру</button>
+                <button className="btn btn-danger w-100 mt-3" onClick={ () => { deleteGame(gameObject._id) } }>
+                    <i className="fas fa-trash"></i>
+                    <span className="ml-3">Удалить</span>
+                </button>
             </div>
             <div className="card-footer d-flex justify-content-between align-items-center">
                 <small className="text-muted">{gameObject.dateCreated}</small>

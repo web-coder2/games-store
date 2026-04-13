@@ -99,6 +99,25 @@ router.get('/api/games/getById', async (req, res) => {
     }
 })
 
+router.post('/api/games/deleteGame', async (req, res) => {
+    try {
+
+        const { gameId } = req.body
+
+        let result = await gameSchema.deleteGame(gameId)
+
+        res.status(200).json({
+            msg: 'гейм хас бин сукесфули делитед'
+        })
+
+    } catch (e) {
+        console.log(e.message)
+        res.status(500).json({
+            msg: e.message
+        })
+    }
+})
+
 router.post('/api/games/editGame', async (req, res) => {
     try {
 
