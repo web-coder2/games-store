@@ -33,18 +33,27 @@ const userSchema = new Schema({
     type: String,
     enum: ['user', 'superUser', 'admin', 'dev'],
     required: true,
+    default: 'user'
   }
 });
 
-userSchema.statics.editUserRole = function(newUserObject) {
+userSchema.statics.editUserRole = async function(newUserObject) {
+  try {
+    const userEditResult = await this.findOneAndUpdate(
+      { _id: newUserObject._id },
+      { $set: { userRank: newUserObject.userRank } },
+      { new: true }
+    )
+    return userEditResult
+  } catch (err) {
+    console.error('Error updating user role:', err)
+    throw err
+  }
+}
 
-  const userEditResult = this.findOneAndUpdate(
-    {_id: newUserObject._id},
-    {$set: {
-      userRank: newUserObject.userRank
-    }}
-  )
-
+userSchema.statics.getList = function() {
+  const usersList = this.find()
+  return usersList
 }
 
 userSchema.statics.createNewUser = function(userObject) {

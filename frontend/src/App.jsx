@@ -16,6 +16,7 @@ import Cart from './Cart/Cart'
 import GamePage from './GamePage/GamePage'
 import LoginForm from './LoginForm/LoginForm'
 import HistoryTable from './HistoryTable/HistoryTable'
+import AdminComponent from './AdminComponent/AdminComponent'
 
 function PrivateRoute({ children }) {
   const user = useSelector((state) => state.user)
@@ -50,6 +51,7 @@ function App() {
             <Route path="/game/:gameId" element={ <PrivateRoute>  <GamePage />  </PrivateRoute> } />
             <Route path="/login" element={ <LoginForm /> } />
             <Route path="/historyStars" element={ <HistoryTable /> } />
+            <Route path="/admin" element={ <AdminComponent /> } />
           </Routes>
         </div>
       </Router>

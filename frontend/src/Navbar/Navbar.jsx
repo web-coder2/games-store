@@ -13,15 +13,15 @@ function Navbar() {
     const user = useSelector((state) => state.user)
 
     const navbarLinks = [
-        {to: '/games', name: 'Просмотр игр', allowed: ['user', 'superUser', 'admin', 'dev']},
-        {to: '/about', name: 'Описание маркета', allowed: ['user', 'superUser', 'admin', 'dev']},
-        {to: '/admin', name: 'Админка', allowed: ['user', 'superUser', 'admin', 'dev']},
+        {to: '/games', name: 'Просмотр игр', allowed: ['user', 'superUser', 'admin', 'dev'], idx: 1},
+        {to: '/about', name: 'Описание маркета', allowed: ['user', 'superUser', 'admin', 'dev'], idx: 2},
+        {to: '/admin', name: 'Админка', allowed: ['admin', 'dev'], idx: 3},
     ]
 
     const navbarDropdowLinks = [
-        {to: '/cart', name: 'Корзина', allowed: ['user', 'superUser', 'admin', 'dev']},
-        {to: '/create', name: 'Добавить новую игру', allowed: ['user', 'superUser', 'admin', 'dev']},
-        {to: '/historyStars', name: 'История критиков', allowed: ['user', 'superUser', 'admin', 'dev']},
+        {to: '/cart', name: 'Корзина', allowed: ['user', 'superUser', 'admin', 'dev'], idx: 1},
+        {to: '/create', name: 'Добавить новую игру', allowed: ['admin', 'dev'], idx: 2},
+        {to: '/historyStars', name: 'История критиков', allowed: ['user', 'superUser', 'admin', 'dev'], idx: 3},
 
     ]
 
@@ -49,11 +49,15 @@ function Navbar() {
                     </li> */}
                     {
 
-                        navbarLinks.map((link, index) => {
+                        navbarLinks.map((link) => {
                             return (
-                                 <li className="nav-item" key={ index }>
-                                    <NavLink to={ link.to } className="nav-link">{ link.name }</NavLink>
-                                </li>
+
+                                link.allowed.includes(userObject.userRank) ? 
+
+                                    <li className="nav-item" key={ link.idx }>
+                                        <NavLink to={ link.to } className="nav-link">{ link.name }</NavLink>
+                                    </li>
+                                : null
                             )
                         })
 
@@ -62,22 +66,25 @@ function Navbar() {
                         <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Меню
                         </a>
-                        <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             {/* <NavLink to="/cart" className="dropdown-item">Корзина</NavLink>
                             <NavLink to="/create" className="dropdown-item">Добавить новую игру</NavLink>
                             <NavLink to="/historyStars" className="dropdown-item">История критиков</NavLink> */}
-                            
-                            {
-                                navbarDropdowLinks.map((link, index) => {
-                                    return (
-                                        <li className="nav-item" key={ index }>
-                                            <NavLink to={ link.to } className="dropdown-item">{ link.name }</NavLink>
-                                        </li>
-                                    )
-                                })
-                            }
+                                {
+                                    navbarDropdowLinks.map((link, index) => {
+                                        return (
 
-                        </div>
+                                            link.allowed.includes(userObject.userRank) ? 
+
+                                                <li className="nav-item" key={ link.idx }>
+                                                    <NavLink to={ link.to } className="dropdown-item">{ link.name }</NavLink>
+                                                </li>
+
+                                            : null
+                                        )
+                                    })
+                                }
+                        </ul>
                     </li>
                 </ul>
                 <div className="dropdown d-flex align-items-center">

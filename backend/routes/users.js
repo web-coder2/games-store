@@ -26,6 +26,43 @@ router.post('/api/users/create', async (req, res) => {
     }
 })
 
+router.post('/api/users/editRole', async (req, res) => {
+    try {
+
+        const { newUserObject } = req.body
+
+        resultByEditUserRole = await usersSchema.editUserRole(newUserObject)
+
+        res.status(200).json({
+            msg: 'userRole edited successfuly'
+        })
+
+    } catch (e) {
+        console.log(e.message)
+        res.status(500).json({
+            msg: e.message
+        })
+    }
+})
+
+router.get('/api/users/usersList', async (req, res) => {
+
+    try {
+
+        const usersList = await usersSchema.getList()
+
+        res.status(200).json({
+            data: usersList
+        })
+
+    } catch {
+        console.log(e.message)
+        res.status(500).json({
+            msg: e.message
+        })
+    }   
+})
+
 router.post('/api/users/addNewGame', async (req, res) => {
     try {
         
