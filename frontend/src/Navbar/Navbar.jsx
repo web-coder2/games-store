@@ -12,6 +12,19 @@ function Navbar() {
 
     const user = useSelector((state) => state.user)
 
+    const navbarLinks = [
+        {to: '/games', name: 'Просмотр игр', allowed: ['user', 'superUser', 'admin', 'dev']},
+        {to: '/about', name: 'Описание маркета', allowed: ['user', 'superUser', 'admin', 'dev']},
+        {to: '/admin', name: 'Админка', allowed: ['user', 'superUser', 'admin', 'dev']},
+    ]
+
+    const navbarDropdowLinks = [
+        {to: '/cart', name: 'Корзина', allowed: ['user', 'superUser', 'admin', 'dev']},
+        {to: '/create', name: 'Добавить новую игру', allowed: ['user', 'superUser', 'admin', 'dev']},
+        {to: '/historyStars', name: 'История критиков', allowed: ['user', 'superUser', 'admin', 'dev']},
+
+    ]
+
     useEffect(() => {
         setUserObject(user)
     }, [user])
@@ -28,20 +41,42 @@ function Navbar() {
             </button>
             <div className="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul className="navbar-nav mr-auto">
-                    <li className="nav-item">
+                    {/* <li className="nav-item">
                         <NavLink to="/games" className="nav-link">Просмотр игр</NavLink>
                     </li>
                     <li className="nav-item">
                         <NavLink to="/about" className="nav-link">Описание маркета</NavLink>
-                    </li>
+                    </li> */}
+                    {
+
+                        navbarLinks.map((link, index) => {
+                            return (
+                                 <li className="nav-item" key={ index }>
+                                    <NavLink to={ link.to } className="nav-link">{ link.name }</NavLink>
+                                </li>
+                            )
+                        })
+
+                    }
                     <li className="nav-item dropdown">
                         <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Меню
                         </a>
                         <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <NavLink to="/cart" className="dropdown-item">Корзина</NavLink>
+                            {/* <NavLink to="/cart" className="dropdown-item">Корзина</NavLink>
                             <NavLink to="/create" className="dropdown-item">Добавить новую игру</NavLink>
-                            <NavLink to="/historyStars" className="dropdown-item">История критиков</NavLink>
+                            <NavLink to="/historyStars" className="dropdown-item">История критиков</NavLink> */}
+                            
+                            {
+                                navbarDropdowLinks.map((link, index) => {
+                                    return (
+                                        <li className="nav-item" key={ index }>
+                                            <NavLink to={ link.to } className="dropdown-item">{ link.name }</NavLink>
+                                        </li>
+                                    )
+                                })
+                            }
+
                         </div>
                     </li>
                 </ul>

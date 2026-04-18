@@ -28,10 +28,27 @@ const userSchema = new Schema({
       }
     ],
     default: []
+  },
+  userRank: {
+    type: String,
+    enum: ['user', 'superUser', 'admin', 'dev'],
+    required: true,
   }
 });
 
+userSchema.statics.editUserRole = function(newUserObject) {
+
+  const userEditResult = this.findOneAndUpdate(
+    {_id: newUserObject._id},
+    {$set: {
+      userRank: newUserObject.userRank
+    }}
+  )
+
+}
+
 userSchema.statics.createNewUser = function(userObject) {
+  userObject.userRank = 'user'
   const newUser = new this(userObject)
   return newUser.save()
 }
