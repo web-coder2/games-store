@@ -1,13 +1,18 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate } from 'react-router-dom'
 import { getDataList, setDataList } from '../reduxSetup.js'
+import { Provider, useSelector, useDispatch } from 'react-redux'
 
 const cardGame = function({ gameObject, afterDeleteGame }) {
+
+    const user = useSelector((state) => state.user)
 
     const navigate = useNavigate()
 
     const [showModalToEdit, setShowToEdit] = useState(false)
     const [editGameObject, setEditGameObject] = useState({})
+    const [userObject, setUserObject] = useState({})
+    const [isAdmin, setIsAdmin] = useState(false)
 
     function openShowEditModal() {
         setShowToEdit(true)
@@ -53,6 +58,13 @@ const cardGame = function({ gameObject, afterDeleteGame }) {
         navigate(`/game/${gameId}`)
     }
 
+    useEffect(() => {
+        setUserObject(user)
+
+        let isAdmin = ['admin', 'dev'].includes(user.userRank) ? true : false
+        setIsAdmin(isAdmin)
+    }, [])
+
     return (
 
         <div className="card mb-3 bg-dark text-light h-100">
@@ -63,10 +75,10 @@ const cardGame = function({ gameObject, afterDeleteGame }) {
             <div className="card-body">
                 <p className="card-text">{gameObject.description}</p>
                 <button className="btn btn-success w-100" onClick={() => redirectToPage(gameObject._id)}>read more</button>
-                <button className="btn btn-warning w-100 mt-3" onClick={() => { openShowEditModal() }}>обновить игру</button>
-                <button className="btn btn-danger w-100 mt-3" onClick={ () => { deleteGame(gameObject._id) } }>
+                <button disabled={ !isAdmin } className="btn btn-warning w-100 mt-3" onClick={() => { openShowEditModal() }}>{ isAdmin ? 'обновить игру' : 'ты не можешь обновтиь игру ты не админ'}</button>
+                <button disabled={ !isAdmin } className="btn btn-danger w-100 mt-3" onClick={ () => { deleteGame(gameObject._id) } }>
                     <i className="fas fa-trash"></i>
-                    <span className="ml-3">Удалить</span>
+                    <span className="ml-3">{ isAdmin ? 'Удалить' : 'ты не мжешь удалить игру ты не админ'}</span>
                 </button>
             </div>
             <div className="card-footer d-flex justify-content-between align-items-center">

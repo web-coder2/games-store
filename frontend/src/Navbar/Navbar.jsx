@@ -94,6 +94,7 @@ function Navbar() {
                     </a>
                     <div className="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                         <a className="dropdown-item" href="/login">Выйти</a>
+                        <p className='dropdown-item'>Ранк: { userObject.userRank }</p>
                     </div>
                 </div>
             </div>
